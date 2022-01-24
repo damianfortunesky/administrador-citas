@@ -8,23 +8,29 @@ const horaInput = document.querySelector('#hora');
 const sintomasInput = document.querySelector('#sintomas');
 
 
-// Selecciono el formulario completo y el contenedor donde se mostraria la cita luego 
+// Selecciono el formulario completo y el contenedor donde se mostraria la cita luego
+
 const formulario = document.querySelector('#nuevo-turno');
 const contenedorCitas = document.querySelector('#turno-creado');
 
 
-//Registro los eventos para poder usar los datos del usuario sin usar prompt()
+//Registro los eventos para poder usar los datos del usuario
+
 eventListener();
 function eventListener() {
-    mascotaInput.addEventListener('change', datosTurnos);  // Probe usando input por change pero espameaba  mucho en consola el objeto a medida que agregaba la info.
+    mascotaInput.addEventListener('change', datosTurnos);  
     propietarioInput.addEventListener('change', datosTurnos);
     telefonoInput.addEventListener('change', datosTurnos);
     fechaInput.addEventListener('change', datosTurnos);
     horaInput.addEventListener('change', datosTurnos);
     sintomasInput.addEventListener('change', datosTurnos);
+
+    formulario.addEventListener('submit', nuevoTurno);
 }
 
+
 // El objeto que almacena la info ingresada
+
 const objetoTurno = {
     mascota:'',
     propietario: '',
@@ -34,6 +40,7 @@ const objetoTurno = {
     sintomas:''
 }
 
+
 // Agrega los datos al objetoTurno y luego printea en consola el objeto con la info obtenida
 
 function datosTurnos(e) {
@@ -42,4 +49,20 @@ function datosTurnos(e) {
     console.log(objetoTurno);
 }
 
-// La idea es que para la 2da entrega, al momento de crear el turno aparesca a la derecha del formulario el turno creado (no se como hacerlo aun)
+
+// Validar form
+
+function nuevoTurno(e) {
+    e.preventDefault();
+
+    // Extraer datos del objetoTurno
+    const {mascota, propietario, telefono, fecha, hora, sintomas } = objetoTurno;
+
+    // Validar
+
+    if( mascota == '' || propietario == '' || telefono == '' || fecha == '' || hora == '' || sintomas == '') {
+        console.log('Todos los campos son obligatorios');
+
+        return;
+    }
+}
