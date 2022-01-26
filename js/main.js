@@ -16,17 +16,15 @@ const contenedorTurnos = document.querySelector('#turno-creado');
 
 //Registro los eventos para poder usar los datos del usuario
 
-eventListener();
-function eventListener() {
-    mascotaInput.addEventListener('change', datosTurnos);  
-    propietarioInput.addEventListener('change', datosTurnos);
-    telefonoInput.addEventListener('change', datosTurnos);
-    fechaInput.addEventListener('change', datosTurnos);
-    horaInput.addEventListener('change', datosTurnos);
-    sintomasInput.addEventListener('change', datosTurnos);
+mascotaInput.addEventListener('change', datosTurnos);  
+propietarioInput.addEventListener('change', datosTurnos);
+telefonoInput.addEventListener('change', datosTurnos);
+fechaInput.addEventListener('change', datosTurnos);
+horaInput.addEventListener('change', datosTurnos);
+sintomasInput.addEventListener('change', datosTurnos);
 
-    formulario.addEventListener('submit', nuevoTurno);
-}
+formulario.addEventListener('submit', nuevoTurno);
+
 
 // Utilizo classes para crear alerta 
 
@@ -65,6 +63,11 @@ class Turnos {
 const informacionUsuario = new infoUsuario();
 const administrarTurnos = new Turnos();
 
+
+let myDataJson = JSON.stringify(administrarTurnos);
+localStorage.setItem("DatosUsuarios", myDataJson); // La idea es que una vez quede generado el turno se almacene el la localstorage
+
+
 // El objeto que almacena la info ingresada
 
 const objetoTurno = {
@@ -78,7 +81,6 @@ const objetoTurno = {
 
 
 // Agrega los datos al objetoTurno y luego printea en consola el objeto con la info obtenida
-
 function datosTurnos(e) {
     objetoTurno[e.target.name] = e.target.value;
 
@@ -87,7 +89,6 @@ function datosTurnos(e) {
 
 
 // Validar form
-
 function nuevoTurno(e) {
     e.preventDefault();
 
@@ -111,8 +112,6 @@ function nuevoTurno(e) {
     formulario.reset();
 }
 
-
-
 function reiniciarObjeto() {
     objetoTurno.mascota = '';
     objetoTurno.propietario = '';
@@ -121,3 +120,6 @@ function reiniciarObjeto() {
     objetoTurno.hora = '';
     objetoTurno.sintomas = '';
 }
+
+// OBSERVACION: Falta generar el HTML con el turno creado pero no logre hacerlo funcionar en base a lo que vimos en la clase de workshop, googlie y encontre que surgerian hacerlo con " Turnos.forEach(cita => {}); " pero tampoco logre estructurar el contenido de adentro.
+
