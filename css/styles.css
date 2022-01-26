@@ -5,7 +5,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-image: linear-gradient(-225deg, #45b2a3 0%, #18d4bb 52%, #ff0080 100%);
+  background-image: linear-gradient(-225deg, #121820 0%, #121820 52%, #121820 100%);
   min-height: 100%;
   padding-bottom: 5rem;
 }
@@ -13,7 +13,7 @@ body {
   font-weight: bold;
   font-size: 3rem;
   text-transform: uppercase;
-  color: white;
+  color: #e94560;
 }
 .container {
     background-color: white;

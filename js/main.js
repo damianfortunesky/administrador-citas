@@ -35,17 +35,35 @@ class infoUsuario {
         
         //Creo el div
         const divMensaje = document.createElement('div');
-        divMensaje.classList.add('text-center', 'alert-danger', 'd-block', 'col-12');
+        divMensaje.classList.add('text-center', 'text-light', 'p-2', 'alert-danger', 'd-block', 'col-12');
 
         // Le asigno el mensaje a mostrar
         divMensaje.textContent = mensaje;
 
         // Seleccione el div #contenido y con el metodo insertBefore creo el nuevo div despues de #contenido
-        document.querySelector('#contenido').insertBefore(divMensaje, document.querySelector('agregar-turno'));
+        document.querySelector('#contenido').insertBefore(divMensaje, document.querySelector('agregar-turno')); 
+
+        setTimeout( () => {
+            divMensaje.remove();  // Para que desaparezca la alerta luego de 5s
+        }, 5000 )
     }
 }
 
+class Turnos {
+    constructor() {
+        this.turnos = [];
+    }
+
+    agregarTurno(turno) {
+        this.turno = [...this.turnos, turno];
+
+        console.log(this.turnos);
+    }
+    
+}
+
 const informacionUsuario = new infoUsuario();
+const administrarTurnos = new Turnos();
 
 // El objeto que almacena la info ingresada
 
@@ -74,13 +92,32 @@ function nuevoTurno(e) {
     e.preventDefault();
 
     // Extraer datos del objetoTurno
-    const {mascota, propietario, telefono, fecha, hora, sintomas } = objetoTurno;
+    const {mascota, propietario, telefono, fecha, hora, sintomas} = objetoTurno;
 
     // Validar
-
     if( mascota == '' || propietario == '' || telefono == '' || fecha == '' || hora == '' || sintomas == '') {
         informacionUsuario.imprimirAlerta('Todos los campos son obligatorios');
 
         return;
     }
+
+    // Reiniciar el objeto para la validacion
+    reiniciarObjeto();
+
+    // Crear el turno
+    administrarTurnos.agregarTurno({...objetoTurno}); // Uso una copia del objeto global ya que sino cuando creaba mas de 1 turno, se me pisaba el valor del primer turno y creaba 2 iguales.
+
+    // Reiniciar el form
+    formulario.reset();
+}
+
+
+
+function reiniciarObjeto() {
+    objetoTurno.mascota = '';
+    objetoTurno.propietario = '';
+    objetoTurno.telefono = '';
+    objetoTurno.fecha = '';
+    objetoTurno.hora = '';
+    objetoTurno.sintomas = '';
 }
