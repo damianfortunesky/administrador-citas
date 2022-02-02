@@ -1,29 +1,27 @@
-// Seleccione los input del formulario
+//// Seleccione los input del formulario
 
-const mascotaInput = document.querySelector('#mascota');
-const propietarioInput = document.querySelector('#propietario');
-const telefonoInput = document.querySelector('#telefono');
-const fechaInput = document.querySelector('#fecha');
-const horaInput = document.querySelector('#hora');
-const sintomasInput = document.querySelector('#sintomas');
-
+const mascotaInput = $('#mascota');
+const propietarioInput = $('#propietario');
+const telefonoInput = $('#telefono');
+const fechaInput = $('#fecha');
+const horaInput = $('#hora');
+const sintomasInput = $('#sintomas');
 
 // Selecciono el formulario completo y el contenedor donde se mostraria la cita luego
 
-const formulario = document.querySelector('#nuevo-turno');
-const contenedorTurnos = document.querySelector('#turno-creado');
+const formulario = $('#nuevo-turno');
+const contenedorTurnos = $('#turno-creado');
 
 
 //Registro los eventos para poder usar los datos del usuario
 
-mascotaInput.addEventListener('change', datosTurnos);  
-propietarioInput.addEventListener('change', datosTurnos);
-telefonoInput.addEventListener('change', datosTurnos);
-fechaInput.addEventListener('change', datosTurnos);
-horaInput.addEventListener('change', datosTurnos);
-sintomasInput.addEventListener('change', datosTurnos);
+mascotaInput.on('change', datosTurnos);
+propietarioInput.on('change', datosTurnos);
+telefonoInput.on('change', datosTurnos);
+horaInput.on('change', datosTurnos);
+sintomasInput.on('change', datosTurnos);
 
-formulario.addEventListener('submit', nuevoTurno);
+formulario.on('submit', nuevoTurno);
 
 
 // Utilizo classes para crear alerta 
@@ -39,7 +37,11 @@ class infoUsuario {
         divMensaje.textContent = mensaje;
 
         // Seleccione el div #contenido y con el metodo insertBefore creo el nuevo div despues de #contenido
-        document.querySelector('#contenido').insertBefore(divMensaje, document.querySelector('agregar-turno')); 
+        document.querySelector('#contenido').insertBefore(divMensaje, document.querySelector('agregar-turno'));
+        
+        
+        // const contenido = $('#contenido');
+        // contenido.insertBefore(divMensaje, $('agregar-turno'));  OBSERVACION !! En vez de tirar el alert debajo, desaparece todo el form y lo logro entender como deberia quedar para que funcione
 
         setTimeout( () => {
             divMensaje.remove();  // Para que desaparezca la alerta luego de 5s
@@ -121,5 +123,5 @@ function reiniciarObjeto() {
     objetoTurno.sintomas = '';
 }
 
-// OBSERVACION: Falta generar el HTML con el turno creado pero no logre hacerlo funcionar en base a lo que vimos en la clase de workshop, googlie y encontre que surgerian hacerlo con " Turnos.forEach(cita => {}); " pero tampoco logre estructurar el contenido de adentro.
+
 
