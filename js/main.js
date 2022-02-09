@@ -10,21 +10,20 @@ const sintomasInput = document.querySelector('#sintomas');
 const contenedorCitas = document.querySelector('#citas');
 
 // Formulario nuevas citas
-const formulario = document.querySelector('#nueva-cita')
+const formulario = document.querySelector('#nueva-cita');
+
 formulario.addEventListener('submit', nuevaCita);
 
 let editando = false;
 
-// Eventos
-eventListeners();
-function eventListeners() {
-    mascotaInput.addEventListener('change', datosCita);
-    propietarioInput.addEventListener('change', datosCita);
-    telefonoInput.addEventListener('change', datosCita);
-    fechaInput.addEventListener('change', datosCita);
-    horaInput.addEventListener('change', datosCita);
-    sintomasInput.addEventListener('change', datosCita);
-}
+// Eventos                                  
+mascotaInput.addEventListener('change', datosCita);
+propietarioInput.addEventListener('change', datosCita);
+telefonoInput.addEventListener('change', datosCita);
+fechaInput.addEventListener('change', datosCita);
+horaInput.addEventListener('change', datosCita);
+sintomasInput.addEventListener('change', datosCita);
+
 
 const citaObj = {
     mascota: '',
@@ -80,7 +79,7 @@ class UI {
         setTimeout( () => {
             divMensaje.remove();
         }, 3000);
-   }
+    }
 
    imprimirCitas({citas}) { 
        
@@ -113,13 +112,13 @@ class UI {
             const sintomasParrafo = document.createElement('p');
             sintomasParrafo.innerHTML = `<span class="font-weight-bolder">Síntomas: </span> ${sintomas}`;
 
-            // Agregar un botón de eliminar...
+            // Agregar un botón de eliminar
             const btnEliminar = document.createElement('button');
             btnEliminar.onclick = () => eliminarCita(id); // añade la opción de eliminar
             btnEliminar.classList.add('btn', 'btn-danger', 'mr-2');
             btnEliminar.innerHTML = 'Eliminar <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
 
-            // Añade un botón de editar...
+            // Añade un botón de editar
             const btnEditar = document.createElement('button');
             btnEditar.onclick = () => cargarEdicion(cita);
 
@@ -133,8 +132,8 @@ class UI {
             divCita.appendChild(fechaParrafo);
             divCita.appendChild(horaParrafo);
             divCita.appendChild(sintomasParrafo);
-            divCita.appendChild(btnEliminar)
-            divCita.appendChild(btnEditar)
+            divCita.appendChild(btnEliminar);
+            divCita.appendChild(btnEditar);
 
             contenedorCitas.appendChild(divCita);
         });    
@@ -181,7 +180,7 @@ function nuevaCita(e) {
         // Añade la nueva cita
         administrarCitas.agregarCita({...citaObj});
 
-        // Mostrar mensaje de que todo esta bien...
+        // Mostrar mensaje de que todo esta bien
         ui.imprimirAlerta('Se agregó correctamente')
     }
 
@@ -206,7 +205,6 @@ function reiniciarObjeto() {
     citaObj.hora = '';
     citaObj.sintomas = '';
 }
-
 
 function eliminarCita(id) {
     administrarCitas.eliminarCita(id);
