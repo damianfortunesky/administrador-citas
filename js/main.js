@@ -15,6 +15,7 @@ formulario.addEventListener('submit', nuevaCita);
 
 let editando = false;
 
+
 // Eventos                                  
 mascotaInput.addEventListener('change', datosCita);
 propietarioInput.addEventListener('change', datosCita);
@@ -38,21 +39,28 @@ function datosCita(e) {
 }
 
 // Clases
-class Citas {           // Esta clase es para administrar todo lo referido a las citas creadas
+
+class Citas {           // Esta clase es para administrar todo lo referido a las citas creadas
     constructor() {
-        this.citas = [] // Necesito el constructor para crear el array
+        this.citas = []; // Necesito el constructor para crear el array
     }
+
     agregarCita(cita) {
         this.citas = [...this.citas, cita];
+        localStorage.setItem('citas', JSON.stringify(this.citas));
     }
+
     editarCita(citaActualizada) {
-        this.citas = this.citas.map( cita => cita.id === citaActualizada.id ? citaActualizada : cita)
+        this.citas = this.citas.map( cita => cita.id === citaActualizada.id ? citaActualizada : cita);
+        localStorage.setItem('citas', JSON.stringify(this.citas));
     }
 
     eliminarCita(id) {
-        this.citas = this.citas.filter( cita => cita.id !== id); // crea un nuevo array con todos los elementos que cumplan la condición dada por la función 
+        this.citas = this.citas.filter( cita => cita.id !== id); // crea un nuevo array con todos los elementos que cumplan la condición dada por la función
+        localStorage.setItem('citas', JSON.stringify(this.citas));
     }
 }
+
 
 class UI {                          // Esta clase es para la interfaz de usuario, se encarga de todo lo que se imprime en pantalla
     imprimirAlerta(mensaje, tipo) {
@@ -79,7 +87,7 @@ class UI {                          // Esta clase es para la interfaz de usuario
         }, 3000);
     }
 
-   imprimirCitas({citas}) { 
+   imprimirCitas(citas) { 
        
         this.limpiarHTML();
 
@@ -147,6 +155,12 @@ class UI {                          // Esta clase es para la interfaz de usuario
 const ui = new UI();                  // Clase ui (user interface) instanciada
 const administrarCitas = new Citas(); // Clase Citas instanciada
 
+// Obtener info LocalStorage
+const infoObtenida = JSON.parse(localStorage.getItem('citas'));
+
+ui.imprimirCitas(infoObtenida); // Imprime datos extraidos de localstorage
+
+
 // Funciones
 function nuevaCita(e) {
     e.preventDefault();
@@ -183,7 +197,7 @@ function nuevaCita(e) {
 
 
     // Imprimir el HTML de citas
-    ui.imprimirCitas(administrarCitas);
+    ui.imprimirCitas(administrarCitas.citas);
 
     // Reinicia el objeto
     reiniciarObjeto();
@@ -205,7 +219,7 @@ function reiniciarObjeto() {  // Reiniciar el objeto
 function eliminarCita(id) {
     administrarCitas.eliminarCita(id);
 
-    ui.imprimirCitas(administrarCitas)
+    ui.imprimirCitas(administrarCitas.citas)
 }
 
 function cargarEdicion(cita) {
