@@ -1,4 +1,4 @@
-// Selectores
+// Selectoress
 const mascotaInput = document.querySelector('#mascota');
 const propietarioInput = document.querySelector('#propietario');
 const telefonoInput = document.querySelector('#telefono');
@@ -11,7 +11,6 @@ const contenedorCitas = document.querySelector('#citas');
 
 // Formulario nuevas citas
 const formulario = document.querySelector('#nueva-cita');
-
 formulario.addEventListener('submit', nuevaCita);
 
 let editando = false;
@@ -34,15 +33,14 @@ const citaObj = {
     sintomas: ''
 }
 
-
 function datosCita(e) {
     citaObj[e.target.name] = e.target.value;
 }
 
 // Clases
-class Citas {
+class Citas {           // Esta clase es para administrar todo lo referido a las citas creadas
     constructor() {
-        this.citas = []
+        this.citas = [] // Necesito el constructor para crear el array
     }
     agregarCita(cita) {
         this.citas = [...this.citas, cita];
@@ -52,11 +50,11 @@ class Citas {
     }
 
     eliminarCita(id) {
-        this.citas = this.citas.filter( cita => cita.id !== id);
+        this.citas = this.citas.filter( cita => cita.id !== id); // crea un nuevo array con todos los elementos que cumplan la condición dada por la función 
     }
 }
 
-class UI {
+class UI {                          // Esta clase es para la interfaz de usuario, se encarga de todo lo que se imprime en pantalla
     imprimirAlerta(mensaje, tipo) {
         // Crea el div
         const divMensaje = document.createElement('div');
@@ -66,7 +64,7 @@ class UI {
         if(tipo === 'error') {
              divMensaje.classList.add('alert-danger');
         } else {
-             divMensaje.classList.add('alert-success');
+             divMensaje.classList.add('alert-dark');
         }
 
         // Mensaje de error
@@ -112,18 +110,18 @@ class UI {
             const sintomasParrafo = document.createElement('p');
             sintomasParrafo.innerHTML = `<span class="font-weight-bolder">Síntomas: </span> ${sintomas}`;
 
-            // Agregar un botón de eliminar
+            // Agrega un botón para eliminar
             const btnEliminar = document.createElement('button');
-            btnEliminar.onclick = () => eliminarCita(id); // añade la opción de eliminar
+            btnEliminar.onclick = () => eliminarCita(id); // Agrega la opción de eliminar
             btnEliminar.classList.add('btn', 'btn-danger', 'mr-2');
-            btnEliminar.innerHTML = 'Eliminar <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+            btnEliminar.innerHTML = 'Eliminar'
 
-            // Añade un botón de editar
+            // Agrega un botón para editar
             const btnEditar = document.createElement('button');
             btnEditar.onclick = () => cargarEdicion(cita);
 
             btnEditar.classList.add('btn', 'btn-info');
-            btnEditar.innerHTML = 'Editar <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>'
+            btnEditar.innerHTML = 'Editar'
 
             // Agregar al HTML
             divCita.appendChild(mascotaParrafo);
@@ -146,9 +144,10 @@ class UI {
    }
 }
 
-const ui = new UI();
-const administrarCitas = new Citas();
+const ui = new UI();                  // Clase ui (user interface) instanciada
+const administrarCitas = new Citas(); // Clase Citas instanciada
 
+// Funciones
 function nuevaCita(e) {
     e.preventDefault();
 
@@ -172,15 +171,13 @@ function nuevaCita(e) {
         editando = false;
 
     } else {
-        // Nuevo Registrando
-
-        // Generar un ID único
+        // Genero un ID para las class Citas
         citaObj.id = Date.now();
         
-        // Añade la nueva cita
+        // Agrega la cita
         administrarCitas.agregarCita({...citaObj});
 
-        // Mostrar mensaje de que todo esta bien
+        // Mostrar mensaje 
         ui.imprimirAlerta('Se agregó correctamente')
     }
 
@@ -188,7 +185,7 @@ function nuevaCita(e) {
     // Imprimir el HTML de citas
     ui.imprimirCitas(administrarCitas);
 
-    // Reinicia el objeto para evitar futuros problemas de validación
+    // Reinicia el objeto
     reiniciarObjeto();
 
     // Reiniciar Formulario
@@ -196,8 +193,7 @@ function nuevaCita(e) {
 
 }
 
-function reiniciarObjeto() {
-    // Reiniciar el objeto
+function reiniciarObjeto() {  // Reiniciar el objeto
     citaObj.mascota = '';
     citaObj.propietario = '';
     citaObj.telefono = '';
